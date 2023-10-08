@@ -1,0 +1,65 @@
+{% extends "hello.html" %}
+
+{% block start %}
+
+<div class="container mt-5">
+    <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2> Add Recipe</h2>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Recipe name</label>
+            <input name="vege_name" type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Recipe desciption</label>
+            <textarea class="form-control" name="vege_description"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Recipe image</label>
+            <input name="vege_image" type="file" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+
+        <div class="mt-5">
+          <div class="mx-auto col-6">
+            <div class="mb-3">
+              <label class="form-label">Search Food</label>
+              <input name="Search" type="text">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Search</button>
+
+          </div>
+        </div>
+        <table class="table mt-5">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Recipe name</th>
+                <th scope="col">Recipe description</th>
+                <th scope="col">image</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for vege in veges %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{vege.vege_name}}</td>
+                <td>{{vege.vege_description}}</td>
+                <td>
+                    <img src="/media/{{vege.vege_image}}" style="height: 100px;">
+                </td>
+                <td>
+                    <a href="/del_rec/{{vege.id}}" class="btn btn-danger m-2">Delete</button>
+                    <a href="/update_rec/{{vege.id}}" class="btn btn-success">Update</button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+</div>
+    
+
+{% endblock %}
